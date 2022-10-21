@@ -1,0 +1,185 @@
+body {
+  max-width: 100vw;
+  height: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  margin: 0;
+  background: repeat left -17px top -22px/55px 55px, repeating-linear-gradient(
+    to right, transparent,
+    transparent 95px,
+    #f3d773 100px,
+    #f3d773 100px
+  ),
+  repeating-linear-gradient(
+    to bottom, transparent,
+    transparent 95px,
+    #f3d773 100px,
+    #f3d773 100px
+  ),
+  linear-gradient(0deg, #ffc700, #ffc700);
+}
+
+p {
+  margin: 0;
+}
+
+.main {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.main > .not-facebook-box-outer {
+  width: 776px;
+  height: 494px;
+  background-color: white;
+  border: 5px solid black;
+  -webkit-box-shadow: 15px 12px 0 0 rgb(0, 0, 0);
+  -moz-box-shadow: 15px 12px 0 0 rgb(0, 0, 0);
+  box-shadow: 15px 12px 0 0 rgb(0, 0, 0);
+  position: relative;
+}
+
+.main > .not-facebook-box-outer > p#this-is-rantages {
+  color: #202020;
+  font-family: 'Changa One', cursive;
+  font-size: 74px;
+  position: absolute;
+  top: -100px;
+  left: 12%;
+  text-transform: uppercase;
+}
+
+.main > .not-facebook-box-outer img:nth-of-type(1) {
+  display: block;
+  width: 500px;
+  position: absolute;
+  top: 125px;
+  left: -150px;
+}
+
+.main > .not-facebook-box-outer img:nth-of-type(2) {
+  display: block;
+  position: absolute;
+  top: 266px;
+  left: 25px;
+}
+
+.main > .not-facebook-box-outer img:nth-of-type(3) {
+  display: block;
+  position: absolute;
+  top: 291px;
+  left: 45px;
+}
+
+.main > .not-facebook-box-outer img:nth-of-type(4) {
+  display: block;
+  position: absolute;
+  top: 288px;
+  left: 88px;
+}
+
+.main > .not-facebook-box-outer img:nth-of-type(5) {
+  display: block;
+  position: absolute;
+  top: 339px;
+  left: 70px;
+}
+
+.main > .not-facebook-box-outer > .not-facebook-box-inner {
+  width: inherit;
+  height: 100%;
+  background-size: 50px 50px;
+  background-image:
+    linear-gradient(to right, #e6e6e6 2px, transparent 1px),
+    linear-gradient(to bottom, #e6e6e6 2px, transparent 1px);
+}
+
+.main > .not-facebook-box-outer > .not-facebook-box-inner > .to-the-audience {
+  display: inline-grid;
+  grid-template-columns: 2fr 1.5fr 1fr;
+}
+
+.main > .not-facebook-box-outer > .white-box {
+  width: inherit;
+  height: calc(100% - 90px);
+  background-color: white;
+  border-bottom: 2px solid #6d6d6d;
+  position: absolute;
+  top: 0;
+  z-index: 0;
+}
+
+.main > .not-facebook-box-outer > .white-box > .navbar {
+  background-color: black;
+  width: 100%;
+  height: 46px;
+  display: inline-grid;
+  grid-template-columns: max-content auto 50px;
+  align-content: center;
+}
+
+.main > .not-facebook-box-outer > .white-box > .navbar > .window-controls {
+  width: inherit;
+  display: inline-grid;
+  grid-template-columns: max-content max-content max-content;
+  grid-column-gap: 8px;
+  align-self: center;
+  padding-left: 15px;
+}
+
+.main > .not-facebook-box-outer > .white-box > .navbar > .window-controls > .window-control {
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  background-color: white;
+}
+
+.main > .not-facebook-box-outer > .white-box > .navbar > .window-controls > .window-control:nth-child(1) {
+  background-color: #269B4E;
+}
+
+.main > .not-facebook-box-outer > .white-box > .navbar > .window-controls > .window-control:nth-child(2) {
+  background-color: #E9493D;
+}
+
+.main > .not-facebook-box-outer > .white-box > .navbar > .window-controls > .window-control:nth-child(3) {
+  background-color: #FFF052;
+}
+
+.main > .not-facebook-box-outer > .white-box > .navbar > .window-title > p {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 24px;
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.main > .not-facebook-box-outer > .white-box > .to-the-audience {
+  display: inline-grid;
+  grid-template-columns: 2fr 1.5fr 1fr;
+  grid-column-gap: 16px;
+  padding: 50px 0 0 0;
+}
+
+.main > .not-facebook-box-outer > .white-box > .to-the-audience div:nth-of-type(1) > p {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 30px;
+  text-align: right;
+}
+
+.main > .not-facebook-box-outer > .white-box > .to-the-audience div:nth-of-type(2) {
+  background-color: #ffc700;
+  padding-bottom: 40px;
+}
+
+.main > .not-facebook-box-outer > .white-box > .to-the-audience div:nth-of-type(2) > p {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 32px;
+  line-height: 150%;
+}
