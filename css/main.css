@@ -53,7 +53,7 @@ p {
   text-transform: uppercase;
 }
 
-.main > .not-facebook-box-outer img:nth-of-type(1) {
+.main > .not-facebook-box-outer > img#monalisa {
   display: block;
   width: 500px;
   position: absolute;
@@ -99,16 +99,16 @@ p {
   overflow: hidden;
 }
 
-.main > .not-facebook-box-outer > .not-facebook-box-inner > div#marker-container {
+.main > .not-facebook-box-outer .not-facebook-box-inner div#marker-container {
   width: 100%;
   height: 100%;
   position: absolute;
-  right: -98%;
   z-index: 999;
-  top: -30px;
+  top: 93px;
+  left: 610px;
 }
 
-.main > .not-facebook-box-outer > .not-facebook-box-inner > div#marker-container > img {
+.main > .not-facebook-box-outer .not-facebook-box-inner div#marker-container img {
   display: block;
   width: 166px;
 }
@@ -221,4 +221,39 @@ p {
   font-size: 33px;
   line-height: 39px;
   text-transform: uppercase;
+}
+
+.main > .not-facebook-box-outer > .white-box .to-the-audience > div:nth-of-type(3) div#been-here p:nth-of-type(2) > span:first-child {
+  color: #6101FF;
+}
+
+.main > .not-facebook-box-outer > .aus-x-bd-container {
+  position: absolute;
+  width: inherit;
+  bottom: 29px;
+  display: inline-grid;
+  justify-content: end;
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+}
+
+.main > .not-facebook-box-outer > .aus-x-bd-container >.aus-x-bd {
+  display: flex;
+  gap: 25px;
+  padding-right: 15px;
+  width: 100%;
+  align-items: center;
+}
+
+.main > .not-facebook-box-outer > .aus-x-bd-container >.aus-x-bd > p:first-child {
+  font-weight: 600;
+}
+
+.main > .not-facebook-box-outer > .aus-x-bd-container >.aus-x-bd > img {
+  border-left: 2px solid black;
+  padding-left: 25px;
+}
+
+.main > .not-facebook-box-outer > .aus-x-bd-container >.aus-x-bd > p:nth-of-type(2) {
+  font-size: 24px;
 }
