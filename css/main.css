@@ -96,6 +96,21 @@ p {
   background-image:
     linear-gradient(to right, #e6e6e6 2px, transparent 1px),
     linear-gradient(to bottom, #e6e6e6 2px, transparent 1px);
+  overflow: hidden;
+}
+
+.main > .not-facebook-box-outer > .not-facebook-box-inner > div#marker-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  right: -98%;
+  z-index: 999;
+  top: -30px;
+}
+
+.main > .not-facebook-box-outer > .not-facebook-box-inner > div#marker-container > img {
+  display: block;
+  width: 166px;
 }
 
 .main > .not-facebook-box-outer > .not-facebook-box-inner > .to-the-audience {
@@ -165,7 +180,7 @@ p {
   padding: 50px 0 0 0;
 }
 
-.main > .not-facebook-box-outer > .white-box > .to-the-audience div:nth-of-type(1) > p {
+.main > .not-facebook-box-outer > .white-box .to-the-audience > div:first-child {
   font-family: 'IBM Plex Mono', monospace;
   font-weight: 700;
   text-transform: uppercase;
@@ -173,13 +188,37 @@ p {
   text-align: right;
 }
 
-.main > .not-facebook-box-outer > .white-box > .to-the-audience div:nth-of-type(2) {
+.main > .not-facebook-box-outer > .white-box .to-the-audience > div:nth-of-type(2) {
   background-color: #ffc700;
   padding-bottom: 40px;
 }
 
-.main > .not-facebook-box-outer > .white-box > .to-the-audience div:nth-of-type(2) > p {
+.main > .not-facebook-box-outer > .white-box .to-the-audience div:nth-of-type(2) > p {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 32px;
   line-height: 150%;
+}
+
+.main > .not-facebook-box-outer > .white-box .to-the-audience > div:nth-of-type(3) {
+  position: relative;
+  overflow: hidden;
+}
+
+.main > .not-facebook-box-outer > .white-box .to-the-audience > div:nth-of-type(3) div#been-here {
+  position: absolute;
+  left: 35px;
+  top: 12px;
+}
+
+.main > .not-facebook-box-outer > .white-box .to-the-audience > div:nth-of-type(3) div#been-here p:nth-of-type(1) {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.main > .not-facebook-box-outer > .white-box .to-the-audience > div:nth-of-type(3) div#been-here p:nth-of-type(2) {
+  font-family: 'Changa One', cursive;
+  font-size: 33px;
+  line-height: 39px;
+  text-transform: uppercase;
 }
