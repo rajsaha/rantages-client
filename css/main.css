@@ -18,6 +18,7 @@ body {
     #f3d773 100px
   ),
   linear-gradient(0deg, #ffc700, #ffc700);
+  overflow-x: hidden;
 }
 
 p {
