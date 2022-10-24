@@ -102,7 +102,6 @@ a {
 }
 
 .main > .not-facebook-box-outer > .not-facebook-box-inner {
-  width: inherit;
   height: 100%;
   background-size: 50px 50px;
   background-image:
@@ -117,18 +116,12 @@ a {
   height: 100%;
   position: absolute;
   z-index: 999;
-  top: 93px;
+  top: 63px;
   left: 610px;
 }
 
 .main > .not-facebook-box-outer .not-facebook-box-inner div#marker-container img {
-  display: block;
-  width: 166px;
-}
-
-.main > .not-facebook-box-outer > .not-facebook-box-inner > .to-the-audience {
-  display: inline-grid;
-  grid-template-columns: 2fr 1.5fr 1fr;
+  display: none;
 }
 
 .main > .not-facebook-box-outer > .white-box {
@@ -139,6 +132,7 @@ a {
   position: absolute;
   top: 0;
   z-index: 0;
+  overflow: hidden;
 }
 
 .main > .not-facebook-box-outer > .white-box > .navbar {
@@ -180,7 +174,7 @@ a {
 
 .main > .not-facebook-box-outer > .white-box > .navbar > .window-title > p {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 24px;
+  font-size: 20px;
   color: white;
   text-transform: uppercase;
   text-align: center;
@@ -188,61 +182,68 @@ a {
 
 .main > .not-facebook-box-outer > .white-box > .to-the-audience {
   display: inline-grid;
-  grid-template-columns: 2fr 1.5fr 1fr;
+  grid-template-columns: 1fr;
   grid-column-gap: 16px;
-  padding: 50px 0 0 0;
+  grid-row-gap: 25px;
+  padding: 25px 0 0 0;
 }
 
-.main > .not-facebook-box-outer > .white-box .to-the-audience > div:first-child {
+.main > .not-facebook-box-outer > .white-box .to-the-audience .top p {
   font-family: 'IBM Plex Mono', monospace;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 30px;
-  text-align: right;
+  text-align: center;
 }
 
-.main > .not-facebook-box-outer > .white-box .to-the-audience > div:nth-of-type(2) {
+.main > .not-facebook-box-outer > .white-box .to-the-audience .bottom {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.main > .not-facebook-box-outer > .white-box .to-the-audience .bottom .almost-here {
   background-color: #ffc700;
   padding-bottom: 40px;
 }
 
-.main > .not-facebook-box-outer > .white-box .to-the-audience div:nth-of-type(2) > p {
+.main > .not-facebook-box-outer > .white-box .to-the-audience .bottom .almost-here p {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 32px;
+  font-size: 25px;
   line-height: 150%;
 }
 
-.main > .not-facebook-box-outer > .white-box .to-the-audience > div:nth-of-type(3) {
+.main > .not-facebook-box-outer > .white-box .to-the-audience .bottom .been-here-outer {
   position: relative;
-  overflow: hidden;
+  /*background-image: url("../img/markerSmall.png");*/
+  /*background-repeat: no-repeat;*/
 }
 
-.main > .not-facebook-box-outer > .white-box .to-the-audience > div:nth-of-type(3) div#been-here {
+.main > .not-facebook-box-outer > .white-box .to-the-audience .bottom .been-here-outer .been-here-inner {
   position: absolute;
   left: 35px;
   top: 12px;
 }
 
-.main > .not-facebook-box-outer > .white-box .to-the-audience > div:nth-of-type(3) div#been-here p:nth-of-type(1) {
+.main > .not-facebook-box-outer > .white-box .to-the-audience .bottom .been-here-outer .been-here-inner p:nth-of-type(1) {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 18px;
   line-height: 27px;
 }
 
-.main > .not-facebook-box-outer > .white-box .to-the-audience > div:nth-of-type(3) div#been-here p:nth-of-type(2) {
+.main > .not-facebook-box-outer > .white-box .to-the-audience .bottom .been-here-outer .been-here-inner p:nth-of-type(2) {
   font-family: 'Changa One', cursive;
   font-size: 33px;
   line-height: 39px;
   text-transform: uppercase;
 }
 
-.main > .not-facebook-box-outer > .white-box .to-the-audience > div:nth-of-type(3) div#been-here p:nth-of-type(2) > span:first-child {
+.main > .not-facebook-box-outer > .white-box .to-the-audience .bottom .been-here-outer .been-here-inner p:nth-of-type(2) > span:first-child {
   color: #6101FF;
 }
 
 .main > .not-facebook-box-outer > .aus-x-bd-container {
   position: absolute;
-  width: inherit;
+  width: 100%;
   bottom: 29px;
   display: inline-grid;
   justify-content: end;
@@ -310,6 +311,13 @@ a {
 
 .names {
   display: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: 30px;
+  grid-template-columns: 1fr;
+  height: 50px;
+  width: 100%;
+  text-align: center;
 }
 
 @media (min-width: 1100px) {
@@ -359,9 +367,33 @@ a {
   .main > .not-facebook-box-outer > .white-box {
     width: inherit;
   }
-}
 
-@media (min-height: 1100px) {
+  .main > .not-facebook-box-outer > .white-box > .navbar > .window-title > p {
+    font-size: 24px;
+  }
+
+  .main > .not-facebook-box-outer > .white-box > .to-the-audience {
+    grid-template-columns: 2fr 1.5fr 1fr;
+    grid-row-gap: 0;
+  }
+
+  .main > .not-facebook-box-outer > .white-box .to-the-audience .bottom {
+    display: flex;
+  }
+
+  .main > .not-facebook-box-outer > .white-box .to-the-audience .top p {
+    text-align: right;
+  }
+
+  .main > .not-facebook-box-outer .not-facebook-box-inner div#marker-container img {
+    display: block;
+    width: 166px;
+  }
+
+  .main > .not-facebook-box-outer > .white-box .to-the-audience .bottom .almost-here p {
+    font-size: 32px;
+  }
+
   .names {
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 700;
@@ -372,6 +404,7 @@ a {
     position: absolute;
     width: 100%;
     bottom: 15px;
+    text-align: inherit;
   }
 
   .names p:first-child {
@@ -381,5 +414,11 @@ a {
   .names p:last-child {
     padding: 0 2rem 0 0;
     justify-self: end;
+  }
+}
+
+@media (max-height: 1100px) {
+  .names {
+    display: none !important;
   }
 }
