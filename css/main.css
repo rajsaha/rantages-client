@@ -21,6 +21,7 @@ body {
   overflow-x: hidden;
   cursor: url('../img/arrow.png'), auto;
   position: relative;
+  box-sizing: border-box;
 }
 
 p {
@@ -33,14 +34,21 @@ a {
 }
 
 .main {
-  width: 100vw;
+  width: 100%;
   display: grid;
-  align-items: center;
   justify-items: center;
 }
 
+.main #this-is-rantages-outer {
+  color: #202020;
+  font-family: 'Changa One', cursive;
+  font-size: 60px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .main > .not-facebook-box-outer {
-  width: 776px;
+  width: calc(100% - 4rem);
   height: 494px;
   background-color: white;
   border: 5px solid black;
@@ -58,15 +66,11 @@ a {
   top: -100px;
   left: 12%;
   text-transform: uppercase;
+  display: none;
 }
 
 .main > .not-facebook-box-outer > img#monalisa {
-  display: block;
-  width: 500px;
-  position: absolute;
-  top: 125px;
-  left: -150px;
-  z-index: 0;
+  display: none;
 }
 
 .main > .not-facebook-box-outer img:nth-of-type(2) {
@@ -105,7 +109,7 @@ a {
     linear-gradient(to right, #e6e6e6 2px, transparent 1px),
     linear-gradient(to bottom, #e6e6e6 2px, transparent 1px);
   overflow: hidden;
-  margin-bottom: 120px;
+  margin-bottom: 40px;
 }
 
 .main > .not-facebook-box-outer .not-facebook-box-inner div#marker-container {
@@ -128,7 +132,7 @@ a {
 }
 
 .main > .not-facebook-box-outer > .white-box {
-  width: inherit;
+  width: 100%;
   height: calc(100% - 90px);
   background-color: white;
   border-bottom: 2px solid #6d6d6d;
@@ -273,12 +277,14 @@ a {
 
 .main .not-facebook-box-outer .buttons-and-names .buttons {
   display: inline-grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
+  grid-row-gap: 1.5rem;
   grid-column-gap: 2.5rem;
   font-family: 'Changa One', cursive;
-  font-size: 53px;
+  font-size: 30px;
   color: white;
-  width: 776px;
+  width: calc(100% - 2rem);
+  padding-left: 1rem;
   text-transform: uppercase;
   text-align: center;
   margin-bottom: 2rem;
@@ -303,22 +309,77 @@ a {
 }
 
 .names {
-  font-family: 'IBM Plex Mono', monospace;
-  font-weight: 700;
-  font-size: 30px;
-  display: inline-grid;
-  grid-template-columns: 1fr 1fr;
-  height: 50px;
-  position: absolute;
-  width: 100%;
-  bottom: 15px;
+  display: none;
 }
 
-.names p:first-child {
-  padding: 0 0 0 2rem;
+@media (min-width: 1100px) {
+  .main {
+    width: 100vw;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .main > .not-facebook-box-outer {
+    width: 776px;
+  }
+
+  .main #this-is-rantages-outer {
+    display: none;
+  }
+
+  .main > .not-facebook-box-outer > p#this-is-rantages {
+    position: absolute;
+    top: -100px;
+    left: 12%;
+    text-transform: uppercase;
+    display: inherit;
+  }
+
+  .main > .not-facebook-box-outer > img#monalisa {
+    display: block;
+    width: 500px;
+    position: absolute;
+    top: 125px;
+    left: -150px;
+    z-index: 0;
+  }
+
+  .main .not-facebook-box-outer .buttons-and-names .buttons {
+    grid-template-columns: 1fr 1fr;
+    width: 776px;
+    padding-left: 0;
+    font-size: 53px;
+  }
+
+  .main > .not-facebook-box-outer > .not-facebook-box-inner {
+    margin-bottom: 120px;
+  }
+
+  .main > .not-facebook-box-outer > .white-box {
+    width: inherit;
+  }
 }
 
-.names p:last-child {
-  padding: 0 2rem 0 0;
-  justify-self: end;
+@media (min-height: 1100px) {
+  .names {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 30px;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    height: 50px;
+    position: absolute;
+    width: 100%;
+    bottom: 15px;
+  }
+
+  .names p:first-child {
+    padding: 0 0 0 2rem;
+  }
+
+  .names p:last-child {
+    padding: 0 2rem 0 0;
+    justify-self: end;
+  }
 }
