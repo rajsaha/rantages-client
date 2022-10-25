@@ -193,6 +193,7 @@ a {
   grid-column-gap: 16px;
   grid-row-gap: 25px;
   padding: 25px 0 0 0;
+  width: 100%;
 }
 
 .main > .not-facebook-box-outer > .white-box .to-the-audience .top p {
@@ -206,7 +207,7 @@ a {
 
 .main > .not-facebook-box-outer > .white-box .to-the-audience .bottom {
   display: inline-grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 2fr auto;
   padding: 0 0 1rem 1rem;
 }
 
@@ -223,8 +224,10 @@ a {
 
 .main > .not-facebook-box-outer > .white-box .to-the-audience .bottom .been-here-outer {
   position: relative;
-  /*background-image: url("../img/markerSmall.png");*/
-  /*background-repeat: no-repeat;*/
+  background-image: url("../img/markerSmall.png");
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: contain;
 }
 
 .main > .not-facebook-box-outer > .white-box .to-the-audience .bottom .been-here-outer .been-here-inner {
