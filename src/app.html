@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Rantages 3.0</title>
+		<link rel="apple-touch-icon" sizes="180x180" href="%sveltekit.assets%/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="%sveltekit.assets%/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="%sveltekit.assets%/favicon-16x16.png">
+		<meta name="description" content="your favourite humour community is about to get bigger">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<meta property="og:title" content="RANTAGES3">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="">
+		<meta property="og:image" content="https://i.imgur.com/Ygqdiyd.png">
+
+		<link rel="apple-touch-icon" href="%sveltekit.assets%/icon.png">
+
+		<!-- Fonts-->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Changa+One&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+		<meta name="theme-color" content="#fafafa">
+		%sveltekit.head%
+	</head>
+	<style>
+		body {
+			max-width: 100vw;
+			height: 100vh;
+			display: grid;
+			align-items: center;
+			justify-items: center;
+			margin: 0;
+			background: repeat left -17px top -22px/55px 55px, repeating-linear-gradient(
+					to right, transparent,
+					transparent 95px,
+					#f3d773 100px,
+					#f3d773 100px
+			),
+			repeating-linear-gradient(
+					to bottom, transparent,
+					transparent 95px,
+					#f3d773 100px,
+					#f3d773 100px
+			),
+			linear-gradient(0deg, #ffc700, #ffc700);
+			overflow-x: hidden;
+			cursor: url('%sveltekit.assets%/arrow.png'), auto;
+			position: relative;
+			box-sizing: border-box;
+		}
+	</style>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>
