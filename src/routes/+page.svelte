@@ -4,7 +4,7 @@
       <p id="this-is-rantages">this is rantages</p>
       <div class="not-facebook-box-inner">
         <div id="marker-container">
-          <img src="%sveltekit.assets%/marker.png"  alt=""/>
+          <img src="marker.png"  alt=""/>
         </div>
       </div>
       <div class="white-box">
@@ -18,7 +18,7 @@
             <p>notfacebook.app</p>
           </div>
           <div class="icon">
-            <img src="%sveltekit.assets%/icon.png" alt="user-icon"/>
+            <img src="icon.png" alt="user-icon"/>
           </div>
         </div>
 
@@ -269,7 +269,7 @@
 
   .main > .not-facebook-box-outer > .white-box .to-the-audience .bottom .been-here-outer {
     position: relative;
-    background-image: url("%sveltekit.assets%/markerSmall.png");
+    background-image: url("markerSmall.png");
     background-repeat: no-repeat;
     background-position: top;
     background-size: contain;
