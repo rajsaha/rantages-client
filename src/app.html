@@ -24,34 +24,7 @@
 		<meta name="theme-color" content="#fafafa">
 		%sveltekit.head%
 	</head>
-	<style>
-		body {
-			max-width: 100vw;
-			height: 100vh;
-			display: grid;
-			align-items: center;
-			justify-items: center;
-			margin: 0;
-			background: repeat left -17px top -22px/55px 55px, repeating-linear-gradient(
-					to right, transparent,
-					transparent 95px,
-					#f3d773 100px,
-					#f3d773 100px
-			),
-			repeating-linear-gradient(
-					to bottom, transparent,
-					transparent 95px,
-					#f3d773 100px,
-					#f3d773 100px
-			),
-			linear-gradient(0deg, #ffc700, #ffc700);
-			overflow-x: hidden;
-			cursor: url('%sveltekit.assets%/arrow.png'), auto;
-			position: relative;
-			box-sizing: border-box;
-		}
-	</style>
-	<body data-sveltekit-preload-data="hover">
+	<body data-sveltekit-preload-data="hover" style="margin: 0;">
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
