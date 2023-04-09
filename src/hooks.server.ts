@@ -1,12 +1,20 @@
 import { env } from '$env/dynamic/private';
-import type { Handle } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 import type { ActionResult } from '@sveltejs/kit';
+import type { MaybePromise } from "$app/forms";
+import type { ResolveOptions } from "vite";
 
 /**
  * If site is in maintenance mode, disallow non-GET requests.
  * Allow GET requests but return HTTP Code 503.
  * **/
-export const handle: Handle = async ({ event, resolve }) => {
+
+interface HandleEvent {
+    event:  RequestEvent<Partial<Record<string, string>>, string | null>,
+    resolve: (event: RequestEvent, opts?: ResolveOptions) => MaybePromise<Response>,
+}
+
+export async function handle({ event, resolve }: HandleEvent): Promise<Response> {
     if (env.APP_MODE !== 'maintenance') return resolve(event);
 
     if (event.request.method !== 'GET') {
@@ -25,4 +33,5 @@ export const handle: Handle = async ({ event, resolve }) => {
         status: 503,
         statusText: 'Maintenance mode'
     });
-};
+}
+

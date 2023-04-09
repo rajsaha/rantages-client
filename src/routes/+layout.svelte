@@ -1,4 +1,5 @@
 <script lang="ts">
+    import "../app.css";
     import type { LayoutData } from './$types';
     export let data: LayoutData;
     import Site503 from './site-503/+page.svelte'
@@ -36,7 +37,6 @@
         max-width: 100vw;
         height: 100vh;
         overflow-x: hidden;
-        cursor: url('arrow.png'), auto;
         position: relative;
         box-sizing: border-box;
 
@@ -48,7 +48,7 @@
         <Site503 />
     </div>
 {:else}
-    <div class="container">
+    <div class="container p-4">
         <slot />
     </div>
 {/if}
