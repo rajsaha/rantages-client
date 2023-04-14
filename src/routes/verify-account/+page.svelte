@@ -2,6 +2,11 @@
     import CustomButtonComponent from '$components/custom-button/custom-button.component.svelte';
     import CustomInputComponent from '$components/custom-input/custom-input.component.svelte';
     import {BUTTON_COLORS} from "../../enums/button-colors.enum";
+    import {goto} from "$app/navigation";
+
+    function routeToPage(route: string, replaceState: boolean): void {
+        goto(`/${route}`, { replaceState })
+    }
 </script>
 
 <div class="grid grid-rows-2 grid-rows-[auto_,1fr] h-full">
@@ -17,12 +22,20 @@
             <CustomInputComponent inputType="number" />
         </div>
         <div class="mb-4">
-            <CustomButtonComponent buttonText="CONTINUE" backgroundColor={BUTTON_COLORS.rantagesYellow} />
+            <CustomButtonComponent
+                    buttonText="CONTINUE"
+                    backgroundColor={BUTTON_COLORS.rantagesYellow}
+                    on:buttonClicked={() => routeToPage("pick-categories", false)}
+            />
         </div>
     </div>
 
     <div class="self-end">
         <p class="font-bold text-center mb-4">Did not get any code?</p>
-        <CustomButtonComponent buttonText="RESEND CODE" backgroundColor={BUTTON_COLORS.googleRed} textColor="#fff" />
+        <CustomButtonComponent
+                buttonText="RESEND CODE"
+                backgroundColor={BUTTON_COLORS.googleRed}
+                textColor="#fff"
+        />
     </div>
 </div>

@@ -2,6 +2,11 @@
     import CustomButtonComponent from '$components/custom-button/custom-button.component.svelte';
     import CustomInputComponent from '$components/custom-input/custom-input.component.svelte';
     import {BUTTON_COLORS} from "../../enums/button-colors.enum";
+    import { goto } from '$app/navigation';
+
+    function routeToPage(route: string, replaceState: boolean): void {
+        goto(`/${route}`, { replaceState })
+    }
 </script>
 
 <div class="grid gap-4 grid-rows-2 grid-rows-[auto_,1fr] h-full">
@@ -23,7 +28,11 @@
             <CustomInputComponent placeholderText="Continue with Email"/>
         </div>
         <div class="mb-8">
-            <CustomButtonComponent buttonText="CONTINUE" backgroundColor={BUTTON_COLORS.rantagesYellow} />
+            <CustomButtonComponent
+                    buttonText="CONTINUE"
+                    backgroundColor={BUTTON_COLORS.rantagesYellow}
+                    on:buttonClicked={() => routeToPage("verify-account", false)}
+            />
         </div>
         <p class="font-bold text-center p-4">By continuing you agree to your <a href="https://www.google.com">terms</a></p>
     </div>
