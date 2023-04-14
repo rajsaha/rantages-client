@@ -10,6 +10,6 @@ export const load: LayoutServerLoad = async () => {
         case 'maintenance':
             return { maintenance: true };
         default:
-            throw new Error('Invalid app mode!');
+            return { maintenance: true };
     }
 };

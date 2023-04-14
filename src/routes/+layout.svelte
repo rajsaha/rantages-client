@@ -33,7 +33,7 @@
     }
 
     div.container {
-        background-color: #89fbb0;
+        background-color: #50FFAE;
         max-width: 100vw;
         height: 100vh;
         overflow-x: hidden;
@@ -48,7 +48,7 @@
         <Site503 />
     </div>
 {:else}
-    <div class="container p-4">
+    <div class="container px-8 py-8">
         <slot />
     </div>
 {/if}

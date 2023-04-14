@@ -1,4 +1,7 @@
-<input class="shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] text-[20px]" type="text" placeholder="Continue with Email"/>
+<script lang="ts">
+    export let placeholderText = '';
+    export let inputType = 'text';
+</script>
 
 <style>
     input {
@@ -19,4 +22,20 @@
         text-align: center;
         font-weight: bold;
     }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
 </style>
+
+<input class="shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] text-[20px]" type="{inputType}" placeholder="{placeholderText}"/>
+
+
