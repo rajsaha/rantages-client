@@ -13,7 +13,7 @@
     <div class="relative self-center">
         <img src="sparkle.png" alt="sparkle" class="mb-4"/>
         <h1 class="text-4xl font-bold">Your home for freshly baked <a href="https://www.facebook.com/Rantages">memes</a></h1>
-        <img src="sparkle.png" alt="sparkle" class="ml-auto mt-[-2rem] mr-[5rem]"/>
+        <img src="sparkle.png" alt="sparkle" class="ml-auto mr-[5rem]"/>
     </div>
 
     <div class="self-end">
