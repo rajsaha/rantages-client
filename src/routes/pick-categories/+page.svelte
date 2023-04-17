@@ -4,6 +4,7 @@
     import {BUTTON_COLORS} from "../../enums/button-colors.enum";
     import {CATEGORIES} from "../../enums/categories.enum";
     import {CATEGORY_COLORS} from "../../enums/category-colors.enum";
+    import {goto} from "$app/navigation";
 
     let selectedCategories: [string, string] = [];
 
@@ -21,6 +22,10 @@
 
     function updateSelectedCategories(categories): void {
         selectedCategories = categories;
+    }
+
+    function routeToPage(route: string, replaceState: boolean): void {
+        if (selectedCategories.length === 2) goto(`/${route}`, { replaceState })
     }
 </script>
 
@@ -72,6 +77,10 @@
     </div>
 
     <div class="self-end">
-        <CustomButtonComponent buttonText="CONTINUE" backgroundColor={BUTTON_COLORS.rantagesYellow} />
+        <CustomButtonComponent
+                buttonText="CONTINUE"
+                backgroundColor={BUTTON_COLORS.rantagesYellow}
+                on:buttonClicked={() => routeToPage("all-set", false)}
+        />
     </div>
 </div>
