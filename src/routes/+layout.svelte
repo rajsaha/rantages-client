@@ -1,11 +1,9 @@
 <script lang="ts">
     import "../app.css";
     import type { LayoutData } from './$types';
-    import { page } from '$app/stores';
-    export let data: LayoutData;
     import Site503 from './site-503/+page.svelte'
 
-    let isInFeed = $page.url.pathname.includes('feed');
+    export let data: LayoutData;
 </script>
 
 <style>
@@ -50,7 +48,7 @@
         <Site503 />
     </div>
 {:else}
-    <div class="container bg-rantages-teal {isInFeed ? 'p-0' : 'p-8'}">
+    <div class="container bg-rantages-teal {data.isInFeed ? 'p-0' : 'p-8'}">
         <slot />
     </div>
 {/if}
