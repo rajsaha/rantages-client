@@ -1,8 +1,11 @@
 <script lang="ts">
     import "../app.css";
     import type { LayoutData } from './$types';
+    import { page } from '$app/stores';
     export let data: LayoutData;
     import Site503 from './site-503/+page.svelte'
+
+    let isInFeed = $page.url.pathname.includes('feed');
 </script>
 
 <style>
@@ -33,7 +36,6 @@
     }
 
     div.container {
-        background-color: #50FFAE;
         max-width: 100vw;
         height: 100vh;
         overflow-x: hidden;
@@ -48,7 +50,7 @@
         <Site503 />
     </div>
 {:else}
-    <div class="container px-8 py-8">
+    <div class="container bg-rantages-teal {isInFeed ? 'p-0' : 'p-8'}">
         <slot />
     </div>
 {/if}

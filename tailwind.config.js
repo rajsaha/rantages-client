@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         'rantages-yellow': '#F7FF1D',
+        'rantages-teal': '#50FFAE',
         'facebook-blue': '#6780FF',
         'google-red': '#EE4326',
         'inactive-button': '#39ddff',
