@@ -1,6 +1,11 @@
 <script lang="ts">
+    import {getEventsAction} from "../../lib/utils";
+    import { current_component } from "svelte/internal";
     export let placeholderText = '';
-    export let inputType = 'text';
+    export let inputName = '';
+    export let value = '';
+    export let hasError = false;
+    const events = getEventsAction(current_component);
 </script>
 
 <style>
@@ -36,6 +41,14 @@
     }
 </style>
 
-<input class="shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] text-[20px]" type="{inputType}" placeholder="{placeholderText}"/>
+<input
+        class="shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] text-[20px]"
+        style="border-color: { hasError ? '#EE4326' : '#000' }"
+        type="text"
+        placeholder="{placeholderText}"
+        name="{inputName}"
+        bind:value={value}
+        use:events
+/>
 
 

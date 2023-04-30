@@ -8,7 +8,7 @@ export const load: LayoutServerLoad = async ({ route }) => {
         case 'development':
             return {
                 maintenance: false,
-                isInFeed: route.id.includes('feed')
+                isInFeed: route.id ? route.id.includes('feed') : false
             };
         case 'maintenance':
             return { maintenance: true };
