@@ -29,7 +29,39 @@ function validEmail(email: string) {
     return { validEmail: { error: false } };
 }
 
+function maxLength(length: number) {
+    return function (value: string): ValidatorResult {
+        if (value == null || value.length > length) {
+            return {
+                maxLength: {
+                    error: true,
+                    value: length,
+                    message: `Field maximum length is ${length}`,
+                },
+            };
+        }
+        return { maxLength: { error: false } };
+    };
+}
+
+function numbersOnly(value: string) {
+    const numbersOnlyRegex = /^[0-9]*$/;
+    const isNumbersOnly = numbersOnlyRegex.test(value);
+    if (!isNumbersOnly) {
+        return {
+            numbersOnly: {
+                error: true,
+                value,
+                message: `This field accepts numbers only`,
+            },
+        };
+    }
+    return { numbersOnly: { error: false } };
+}
+
 export const Validators = {
     validEmail,
-    required
+    required,
+    maxLength,
+    numbersOnly
 };

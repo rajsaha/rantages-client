@@ -6,7 +6,7 @@
         <img class="self-center justify-self-end" src="/options.png" alt="options icon" />
     </div>
     <p class="mb-4">{post.caption}</p>
-    <img src="{post.imageUrl}"  alt="post"/>
+    <img src="{post.imageUrl}"  alt="post" class="ml-auto mr-auto"/>
 </div>
 
 <script lang="ts">

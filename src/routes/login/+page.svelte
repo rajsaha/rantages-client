@@ -42,6 +42,15 @@
         validateField(name, value)
     }
 
+    function isControlValid(controlName: string): boolean {
+        const validations = errors[controlName];
+        let isValid = true;
+        if (validations) {
+            Object.keys(validations).some((item) => isValid = validations[item].error);
+        }
+
+        return isValid;
+    }
 
     function routeToPage(route: string, replaceState: boolean): void {
         goto(`/${route}`, {replaceState})
@@ -76,7 +85,7 @@
                 <CustomInputComponent
                         placeholderText="Continue with Email"
                         bind:value={email}
-                        hasError="{errors.email}"
+                        hasError="{isControlValid('email') ? errors.email : ''}"
                         on:blur={() => onBlur('email', email)}
                 />
                 <div class="{ Object.keys(errors).length > 0 ? 'mt-2' : '' }">

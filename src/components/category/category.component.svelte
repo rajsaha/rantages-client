@@ -19,7 +19,7 @@
     }
 </script>
 
-<div class="relative category rounded-lg border-solid border-[#000] shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] font-bold text-[20px] transition-shadow ease-in-out duration-100" on:click={() => selectCategory(categoryId)}>
+<div class="relative category rounded-lg border-solid border-[#000] shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] font-bold text-[20px] transition-shadow ease-in-out duration-100 cursor-pointer" on:click={() => selectCategory(categoryId)}>
     <div class="image-container">
         <img src="{categoryImage}" class="block w-full object-fill" alt="categoryImage"/>
     </div>

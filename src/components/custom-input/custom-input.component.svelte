@@ -43,7 +43,7 @@
     }
 
     /* Firefox */
-    input[type=number] {
+    input {
         -moz-appearance: textfield;
     }
 </style>
@@ -51,9 +51,9 @@
 <input
         class="shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] text-[20px]"
         style="border-color: { hasError ? '#EE4326' : '#000' }"
-        bind:this={inputElement}
         placeholder="{placeholderText}"
         name="{inputName}"
+        bind:this={inputElement}
         bind:value={value}
         use:events
 />
