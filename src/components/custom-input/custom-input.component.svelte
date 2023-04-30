@@ -3,9 +3,16 @@
     import { current_component } from "svelte/internal";
     export let placeholderText = '';
     export let inputName = '';
+    export let inputType = 'text';
     export let value = '';
     export let hasError = false;
     const events = getEventsAction(current_component);
+    import { onMount } from "svelte";
+
+    let inputElement;
+    onMount(() => {
+        inputElement.type = inputType;
+    });
 </script>
 
 <style>
@@ -44,7 +51,7 @@
 <input
         class="shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] text-[20px]"
         style="border-color: { hasError ? '#EE4326' : '#000' }"
-        type="text"
+        bind:this={inputElement}
         placeholder="{placeholderText}"
         name="{inputName}"
         bind:value={value}
