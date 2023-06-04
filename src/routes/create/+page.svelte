@@ -1,163 +1,312 @@
-<h4>Add text to canvas and drag it</h4>
-<form on:submit|preventDefault={submit}>
-    <input bind:this={memeText} id="theText" type="text">
-    <input type="file" id="imageInput" accept = "image/*" bind:this={image}>
-    <button id="submit">Draw text on canvas</button>
-    <br>
-</form>
-<canvas
-        bind:this={canvas}
-        width={width}
-        height={height}
->
-</canvas>
+<script>
+    import { onMount } from "svelte";
 
-<style>
-    canvas {
-        border: 1px solid black;
-    }
-</style>
-
-<script lang="ts">
-    import {onMount} from 'svelte';
-
-    let memeText;
-    let image;
-    let imageFile;
     let canvas;
     let ctx;
-    const width = 300;
-    const height = 300;
-    let startX;
-    let startY;
-    const texts = [];
-    let selectedText = -1;
-    let offsetX = 0;
-    let offsetY = 0;
-    let scrollX = 0;
-    let scrollY = 0;
+    let objects = [];
+    let activeObject = null;
+    let initialPinchDistance = 0;
+    let initialScale = 1;
+    let backgroundImage = null;
 
-    function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < texts.length; i++) {
-            const text = texts[i];
-            if (imageFile) {
-                loadImage(imageFile);
-            }
-            ctx.fillText(text.text, text.x, text.y);
+    function handleBackgroundUpload(event) {
+        const files = event.target.files;
+        const fileCount = files.length;
+
+        if (fileCount === 0) return;
+
+        const images = [];
+
+        let loadedCount = 0;
+
+        function loadImage(file, index) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = new Image();
+                img.onload = function () {
+                    images[index] = img;
+
+                    loadedCount++;
+                    if (loadedCount === fileCount) {
+                        backgroundImage = images; // Assign the array of background images
+                        drawObjects();
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        for (let i = 0; i < fileCount; i++) {
+            loadImage(files[i], i);
         }
     }
 
-    function textDrag(x, y, textIndex) {
-        const text = texts[textIndex];
-        return (x >= text.x && x <= text.x + text.width && y >= text.y - text.height && y <= text.y);
-    }
 
-    function handleMouseDown(e) {
-        e.preventDefault();
-        startX = e.clientX - offsetX;
-        startY = e.clientY - offsetY;
-        for (let i = 0; i < texts.length; i++) {
-            if (textDrag(startX, startY, i)) {
-                selectedText = i;
-            }
-        }
-    }
 
-    function handleMouseUp(e) {
-        e.preventDefault();
-        selectedText = -1;
-    }
+    function handleFileUpload(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
 
-    function handleMouseOut(e) {
-        e.preventDefault();
-        selectedText = -1;
-    }
-
-    function handleMouseMove(e) {
-        if (selectedText < 0) {
-            return;
-        }
-        e.preventDefault();
-        let mouseX;
-        mouseX = e.clientX - offsetX;
-        let mouseY;
-        mouseY = e.clientY - offsetY;
-
-        const dx = mouseX - startX;
-        const dy = mouseY - startY;
-        startX = mouseX;
-        startY = mouseY;
-
-        const text = texts[selectedText];
-        text.x += dx;
-        text.y += dy;
-        draw();
-    }
-
-    function submit() {
-        const y = texts.length * 20 + 20;
-
-        const text = {
-            text: memeText.value,
-            x: 20,
-            y: y,
-            width: 0,
-            height: 0,
+        reader.onload = function (e) {
+            const img = new Image();
+            img.onload = function () {
+                objects.push({ type: "image", img, x: 0, y: 0, scale: 1, dragging: false });
+                drawObjects();
+            };
+            img.src = e.target.result;
         };
 
-        ctx.font = "16px verdana";
-        text.width = ctx.measureText(text.text).width;
-        text.height = 16;
-
-        texts.push(text);
-
-        draw();
+        reader.readAsDataURL(file);
     }
 
-    function loadImage(imageFile) {
-        const reader = new FileReader();
-        reader.readAsDataURL(imageFile);
-        reader.onloadend = function (e) {
-            const myImage = new Image(); // Creates image object
-            if (typeof e.target.result === "string") {
-                myImage.src = e.target.result;
-            } // Assigns converted image to image object
-            myImage.onload = () => {
-                ctx.drawImage(myImage,0,0); // Draws the image on canvas
-                canvas.toDataURL("image/jpeg",0.75); // Assigns image base64 string in jpeg format to a variable
+    function handleTextAdd() {
+        const text = prompt("Enter text:");
+        if (text) {
+            objects.push({ type: "text", text, x: 50, y: 50, scale: 1, dragging: false });
+            drawObjects();
+        }
+    }
+
+    function drawObjects() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw background images
+        if (backgroundImage && backgroundImage.length > 0) {
+            const imageHeight = canvas.height / 2;
+            let offsetY = 0;
+
+            for (let i = 0; i < backgroundImage.length; i++) {
+                const img = backgroundImage[i];
+                ctx.drawImage(img, 0, offsetY, canvas.width, imageHeight);
+                offsetY += imageHeight;
             }
         }
+
+        // Draw other objects
+        objects.forEach((obj) => {
+            ctx.save();
+            ctx.translate(obj.x, obj.y);
+            ctx.scale(obj.scale, obj.scale);
+
+            if (obj.type === "image") {
+                ctx.drawImage(obj.img, 0, 0);
+            } else if (obj.type === "text") {
+                ctx.font = "75px Arial";
+                ctx.shadowColor = "black";
+                ctx.fillStyle = "white";
+                ctx.fillText(obj.text, 0, 0);
+            }
+
+            ctx.restore();
+        });
+    }
+
+
+    function handleMouseDown(event) {
+        const rect = canvas.getBoundingClientRect();
+        const offsetX = event.clientX - rect.left;
+        const offsetY = event.clientY - rect.top;
+
+        let foundObject = false;
+
+        objects.forEach((obj) => {
+            if (obj.type === "image") {
+                if (
+                    offsetX >= obj.x &&
+                    offsetX <= obj.x + obj.img.width &&
+                    offsetY >= obj.y &&
+                    offsetY <= obj.y + obj.img.height
+                ) {
+                    obj.dragging = true;
+                    obj.dragStartX = offsetX;
+                    obj.dragStartY = offsetY;
+                    activeObject = obj;
+                    foundObject = true;
+                }
+            } else if (obj.type === "text") {
+                ctx.font = "75px Arial";
+                const textMetrics = ctx.measureText(obj.text);
+                const textWidth = textMetrics.width;
+                const textHeight = textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent;
+
+                if (
+                    offsetX >= obj.x - textWidth / 2 &&
+                    offsetX <= obj.x + textWidth / 2 &&
+                    offsetY >= obj.y - textHeight &&
+                    offsetY <= obj.y
+                ) {
+                    obj.dragging = true;
+                    obj.dragStartX = offsetX;
+                    obj.dragStartY = offsetY;
+                    activeObject = obj;
+                    foundObject = true;
+                }
+            }
+        });
+
+        if (!foundObject) {
+            objects.forEach((obj) => {
+                obj.dragging = false;
+            });
+            activeObject = null;
+        }
+    }
+
+    function handleMouseMove(event) {
+        const rect = canvas.getBoundingClientRect();
+        const offsetX = event.clientX - rect.left;
+        const offsetY = event.clientY - rect.top;
+
+        objects.forEach((obj) => {
+            if (obj.dragging) {
+                obj.x += offsetX - obj.dragStartX;
+                obj.y += offsetY - obj.dragStartY;
+                obj.dragStartX = offsetX;
+                obj.dragStartY = offsetY;
+                drawObjects();
+            }
+        });
+    }
+
+    function handleMouseUp(event) {
+        objects.forEach((obj) => {
+            obj.dragging = false;
+        });
+        activeObject = null;
+    }
+
+    function handleTouchStart(event) {
+        event.preventDefault();
+        const rect = canvas.getBoundingClientRect();
+
+        if (event.touches.length === 1) {
+            const touchX = event.touches[0].clientX - rect.left;
+            const touchY = event.touches[0].clientY - rect.top;
+
+            let foundObject = false;
+
+            objects.forEach((obj) => {
+                if (obj.type === "image") {
+                    if (
+                        touchX >= obj.x &&
+                        touchX <= obj.x + obj.img.width &&
+                        touchY >= obj.y &&
+                        touchY <= obj.y + obj.img.height
+                    ) {
+                        obj.dragging = true;
+                        obj.dragStartX = touchX;
+                        obj.dragStartY = touchY;
+                        activeObject = obj;
+                        foundObject = true;
+                    }
+                } else if (obj.type === "text") {
+                    ctx.font = "75px Arial";
+                    const textMetrics = ctx.measureText(obj.text);
+                    const textWidth = textMetrics.width;
+                    const textHeight = textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent;
+
+                    if (
+                        touchX >= obj.x - textWidth / 2 &&
+                        touchX <= obj.x + textWidth / 2 &&
+                        touchY >= obj.y - textHeight &&
+                        touchY <= obj.y
+                    ) {
+                        obj.dragging = true;
+                        obj.dragStartX = touchX;
+                        obj.dragStartY = touchY;
+                        activeObject = obj;
+                        foundObject = true;
+                    }
+                }
+            });
+
+            if (!foundObject) {
+                objects.forEach((obj) => {
+                    obj.dragging = false;
+                });
+                activeObject = null;
+            }
+        } else if (event.touches.length === 2) {
+            const touch1X = event.touches[0].clientX - rect.left;
+            const touch1Y = event.touches[0].clientY - rect.top;
+            const touch2X = event.touches[1].clientX - rect.left;
+            const touch2Y = event.touches[1].clientY - rect.top;
+
+            initialPinchDistance = Math.hypot(touch2X - touch1X, touch2Y - touch1Y);
+            initialScale = activeObject ? activeObject.scale : 1;
+        }
+    }
+
+    function handleTouchMove(event) {
+        event.preventDefault();
+        const rect = canvas.getBoundingClientRect();
+
+        if (event.touches.length === 1) {
+            const touchX = event.touches[0].clientX - rect.left;
+            const touchY = event.touches[0].clientY - rect.top;
+
+            objects.forEach((obj) => {
+                if (obj.dragging) {
+                    obj.x += touchX - obj.dragStartX;
+                    obj.y += touchY - obj.dragStartY;
+                    obj.dragStartX = touchX;
+                    obj.dragStartY = touchY;
+                    drawObjects();
+                }
+            });
+        } else if (event.touches.length === 2) {
+            const touch1X = event.touches[0].clientX - rect.left;
+            const touch1Y = event.touches[0].clientY - rect.top;
+            const touch2X = event.touches[1].clientX - rect.left;
+            const touch2Y = event.touches[1].clientY - rect.top;
+
+            const currentPinchDistance = Math.hypot(touch2X - touch1X, touch2Y - touch1Y);
+            const scale = initialScale * (currentPinchDistance / initialPinchDistance);
+            const pivotX = (touch1X + touch2X) / 2;
+            const pivotY = (touch1Y + touch2Y) / 2;
+
+            if (activeObject) {
+                activeObject.scale = scale;
+                activeObject.x = pivotX - (pivotX - activeObject.x) * scale;
+                activeObject.y = pivotY - (pivotY - activeObject.y) * scale;
+                drawObjects();
+            }
+        }
+    }
+
+    function handleTouchEnd(event) {
+        objects.forEach((obj) => {
+            obj.dragging = false;
+        });
+        activeObject = null;
     }
 
     onMount(() => {
+        canvas = document.getElementById("canvas");
         ctx = canvas.getContext("2d");
-        offsetX = ctx.canvas.offsetLeft;
-        offsetY = ctx.canvas.offsetTop;
-        scrollX = ctx.canvas.scrollLeft;
-        scrollY = ctx.canvas.scrollTop;
 
-        canvas.addEventListener('mousedown', (e) => {
-            handleMouseDown(e);
-        });
+        canvas.addEventListener("mousedown", handleMouseDown);
+        canvas.addEventListener("mousemove", handleMouseMove);
+        canvas.addEventListener("mouseup", handleMouseUp);
 
-        canvas.addEventListener('mousemove', (e) => {
-            handleMouseMove(e);
-        });
-
-        canvas.addEventListener('mouseup', (e) => {
-            handleMouseUp(e);
-        });
-
-        canvas.addEventListener('mouseout', (e) => {
-            handleMouseOut(e);
-        });
-
-        image.addEventListener('change', (e) => {
-            if(e.target.files) {
-                imageFile = e.target.files[0];
-                loadImage(imageFile);
-            }
-        });
+        canvas.addEventListener("touchstart", handleTouchStart);
+        canvas.addEventListener("touchmove", handleTouchMove);
+        canvas.addEventListener("touchend", handleTouchEnd);
     });
 </script>
+
+<style>
+    canvas {
+        border: 2px solid black;
+    }
+</style>
+
+<div class="ml-auto mr-auto">
+    <canvas id="canvas" width="350" height="350"></canvas>
+</div>
+
+<input type="file" accept="image/*" on:change={handleBackgroundUpload} multiple />
+<input type="file" accept="image/*" on:change={handleFileUpload} />
+
+<button on:click={handleTextAdd}>Add Text</button>
