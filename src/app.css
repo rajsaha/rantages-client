@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a {
+    box-shadow: inset 0 -0.5em 0 0 #F7FF1D;
+    transition: box-shadow 0.1s ease-in-out;
+    cursor: pointer;
+}
+
+a:hover {
+    box-shadow: inset 0 -0.7em 0 0 #F7FF1D;
+}
+
+.error-message {
+    @apply text-xs font-bold text-google-red;
+}
