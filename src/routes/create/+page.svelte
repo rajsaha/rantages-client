@@ -2,7 +2,9 @@
     import { onMount } from "svelte";
     import Modal from "./Modal.svelte";
     import CustomInputComponent from '$components/custom-input/custom-input.component.svelte';
+    import CustomButtonComponent from '$components/custom-button/custom-button.component.svelte';
     import { setContext } from 'svelte';
+    import { BUTTON_COLORS } from "../../enums/button-colors.enum";
 
     let canvas;
     let ctx;
@@ -15,6 +17,8 @@
     let showModal = false;
     let text = '';
     let textSize = '';
+    let addBackgroundImages;
+    let addFloatingImage;
 
     setContext('modalSubmit', { onSubmit });
 
@@ -100,7 +104,7 @@
             if (obj.type === "image") {
                 ctx.drawImage(obj.img, 0, 0);
             } else if (obj.type === "text") {
-                ctx.font="75px verdana";
+                ctx.font=`${obj.textSize}px verdana`;
                 ctx.shadowColor = "black";
                 ctx.lineWidth = 5;
                 ctx.strokeStyle = "black";
@@ -327,12 +331,23 @@
     }
 
     function onSubmit(event) {
-        console.log(event);
-        console.log(text, textSize);
         showModal = false;
         if (text && event) {
-            objects.push({ type: "text", text, x: 50, y: 50, scale: 1, dragging: false });
+            objects.push({ type: "text", text, textSize: textSize ? textSize: 50, x: 150, y: 150, scale: 1, dragging: false });
             drawObjects();
+        }
+    }
+
+    function download() {
+        if (backgroundImage && backgroundImage.length >= 1) {
+            let canvasUrl = canvas.toDataURL();
+            const createEl = document.createElement('a');
+            createEl.href = canvasUrl;
+
+            createEl.download = "download-this-canvas";
+
+            createEl.click();
+            createEl.remove();
         }
     }
 
@@ -356,14 +371,46 @@
     }
 </style>
 
-<div class="ml-auto mr-auto">
+<div class="ml-auto mr-auto mb-4">
     <canvas id="canvas" width="350" height="350"></canvas>
 </div>
 
-<input type="file" accept="image/*" on:change={handleBackgroundUpload} multiple />
-<input type="file" accept="image/*" on:change={handleFileUpload} />
+<input class="hidden" type="file" accept="image/*" on:change={handleBackgroundUpload} multiple bind:this={addBackgroundImages} />
+<input class="hidden" type="file" accept="image/*" on:change={handleFileUpload} bind:this={addFloatingImage} />
 
-<button on:click={openModal}>Add Text</button>
+<div class="grid gap-4">
+    <form on:submit|preventDefault={() => addBackgroundImages.click()}>
+        <CustomButtonComponent
+                buttonText="Add background images"
+                backgroundColor={BUTTON_COLORS.rantagesYellow}
+                buttonType="submit"
+        />
+    </form>
+
+    <form on:submit|preventDefault={() => addFloatingImage.click()}>
+        <CustomButtonComponent
+                buttonText="Add floating image"
+                backgroundColor={BUTTON_COLORS.rantagesYellow}
+                buttonType="submit"
+        />
+    </form>
+
+    <form on:submit|preventDefault={openModal}>
+        <CustomButtonComponent
+                buttonText="Add Text"
+                backgroundColor={BUTTON_COLORS.rantagesYellow}
+                buttonType="submit"
+        />
+    </form>
+
+    <form on:submit|preventDefault={download}>
+        <CustomButtonComponent
+                buttonText="Download"
+                backgroundColor={BUTTON_COLORS.rantagesYellow}
+                buttonType="submit"
+        />
+    </form>
+</div>
 
 <Modal bind:showModal>
     <h2 slot="header" class="text-2xl font-bold mb-4">
