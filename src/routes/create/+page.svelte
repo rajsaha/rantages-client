@@ -1,5 +1,8 @@
 <script>
     import { onMount } from "svelte";
+    import Modal from "./Modal.svelte";
+    import CustomInputComponent from '$components/custom-input/custom-input.component.svelte';
+    import { setContext } from 'svelte';
 
     let canvas;
     let ctx;
@@ -8,6 +11,12 @@
     let initialPinchDistance = 0;
     let initialScale = 1;
     let backgroundImage = null;
+
+    let showModal = false;
+    let text = '';
+    let textSize = '';
+
+    setContext('modalSubmit', { onSubmit });
 
     function handleBackgroundUpload(event) {
         const files = event.target.files;
@@ -42,8 +51,6 @@
         }
     }
 
-
-
     function handleFileUpload(event) {
         const file = event.target.files[0];
         const reader = new FileReader();
@@ -60,19 +67,15 @@
         reader.readAsDataURL(file);
     }
 
-    function handleTextAdd() {
-        const text = prompt("Enter text:");
-        if (text) {
-            objects.push({ type: "text", text, x: 50, y: 50, scale: 1, dragging: false });
-            drawObjects();
-        }
+    function openModal() {
+        showModal = true;
     }
 
     function drawObjects() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Draw background images
-        if (backgroundImage && backgroundImage.length > 0) {
+        if (backgroundImage && backgroundImage.length > 1) {
             const imageHeight = canvas.height / 2;
             let offsetY = 0;
 
@@ -80,6 +83,11 @@
                 const img = backgroundImage[i];
                 ctx.drawImage(img, 0, offsetY, canvas.width, imageHeight);
                 offsetY += imageHeight;
+            }
+        } else {
+            if (backgroundImage) {
+                const img = backgroundImage[0];
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             }
         }
 
@@ -92,8 +100,12 @@
             if (obj.type === "image") {
                 ctx.drawImage(obj.img, 0, 0);
             } else if (obj.type === "text") {
-                ctx.font = "75px Arial";
+                ctx.font="75px verdana";
                 ctx.shadowColor = "black";
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = "black";
+                ctx.strokeText(obj.text, 0, 0);
+                ctx.shadowBlur = 0;
                 ctx.fillStyle = "white";
                 ctx.fillText(obj.text, 0, 0);
             }
@@ -102,6 +114,38 @@
         });
     }
 
+    // function drawObjects() {
+    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //
+    //     // Draw background images
+    //     if (backgroundImage && backgroundImage.length > 0) {
+    //         const imageHeight = canvas.height;
+    //
+    //         for (let i = 0; i < backgroundImage.length; i++) {
+    //             const img = backgroundImage[i];
+    //             const imageWidth = canvas.width / backgroundImage.length;
+    //             ctx.drawImage(img, i * imageWidth, 0, imageWidth, imageHeight);
+    //         }
+    //     }
+    //
+    //     // Draw other objects
+    //     objects.forEach((obj) => {
+    //         ctx.save();
+    //         ctx.translate(obj.x, obj.y);
+    //         ctx.scale(obj.scale, obj.scale);
+    //
+    //         if (obj.type === "image") {
+    //             ctx.drawImage(obj.img, 0, 0);
+    //         } else if (obj.type === "text") {
+    //             ctx.font = "75px Arial";
+    //             ctx.shadowColor = "black";
+    //             ctx.fillStyle = "white";
+    //             ctx.fillText(obj.text, 0, 0);
+    //         }
+    //
+    //         ctx.restore();
+    //     });
+    // }
 
     function handleMouseDown(event) {
         const rect = canvas.getBoundingClientRect();
@@ -282,6 +326,16 @@
         activeObject = null;
     }
 
+    function onSubmit(event) {
+        console.log(event);
+        console.log(text, textSize);
+        showModal = false;
+        if (text && event) {
+            objects.push({ type: "text", text, x: 50, y: 50, scale: 1, dragging: false });
+            drawObjects();
+        }
+    }
+
     onMount(() => {
         canvas = document.getElementById("canvas");
         ctx = canvas.getContext("2d");
@@ -309,4 +363,24 @@
 <input type="file" accept="image/*" on:change={handleBackgroundUpload} multiple />
 <input type="file" accept="image/*" on:change={handleFileUpload} />
 
-<button on:click={handleTextAdd}>Add Text</button>
+<button on:click={openModal}>Add Text</button>
+
+<Modal bind:showModal>
+    <h2 slot="header" class="text-2xl font-bold mb-4">
+        Add Text
+    </h2>
+
+    <div class="mb-4">
+        <CustomInputComponent
+                placeholderText="Your text here"
+                bind:value={text}
+        />
+    </div>
+
+    <div class="mb-4">
+        <CustomInputComponent
+                placeholderText="Text size"
+                bind:value={textSize}
+        />
+    </div>
+</Modal>
